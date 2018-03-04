@@ -1,0 +1,11 @@
+1. Flask
+   pip install flask
+2. Tweepy
+   pip install Tweepy
+3. alsaaudio
+   sudo apt-get install python-alsaaudio
+4. vlc
+   pip install vlc
+   require install vlc player
+   default pulseaudio is not installed:
+   sudo apt-get --purge --reinstall install pulseaudio
