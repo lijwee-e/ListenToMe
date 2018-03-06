@@ -1,7 +1,7 @@
 #Project Title: ListenToMe
 #Author: Li Jwee
 #Data Created: 04 Feb 18
-#Date Modified: 02 Mar 18
+#Date Modified: 04 Mar 18
 #Version: 0.1 Beta
 
 #Import Modules
@@ -18,7 +18,8 @@ from TwitterModule import *
 from VolumeModule import *
 from RadioModule import *
 from DatabaseModule import *
-
+from PollyModule import *
+from QRModule import *
 
 
 #Variable Declarations
@@ -93,13 +94,21 @@ def setup():
 	initDB()
 	MAXRADIOCHANNEL = getTotalStation()
 	RadioDict = getListOfStation()
-	
+
+	#initialize polly
+	initPolly()
+	playWelcomeMsg()
+	#delay 5 secodns before start
+	sleep(5)
 
 	#intialize radio
 	initRadio(RadioDict["radioStationID:0"][1])
 
+	#intialize ECS
+	initECS()
 	
 
+	
 	
 def destroy():
 	global LCDScreen
@@ -158,9 +167,8 @@ def btnResetChannel(channel):
 	globalRadioChannel = 0
 
 	#in the event if database is updated
-	if getTotalStation() != MAXRADIOCHANNEL:
-                MAXRADIOCHANNEL = getTotalStation()
-                RadioDict = getListOfStation()
+        MAXRADIOCHANNEL = getTotalStation()
+        RadioDict = getListOfStation()
                 
 	changeChannel(RadioDict["radioStationID:" + str(globalRadioChannel)][1])
 	LCDScreen.display_data("Piper Radio", RadioDict["radioStationID:" + str(globalRadioChannel)][0])
@@ -190,6 +198,8 @@ def TweetMusic(msg):
         LCDScreen.display_data("Tweeted!", "")
         sleep(1)
         LCDScreen.display_data("Piper Radio", RadioDict["radioStationID:" + str(globalRadioChannel)][0])
+        #send youtube search result to ECS
+        genQRCode(msg)
         TweetEnable = True
 				
 #################################################################################################

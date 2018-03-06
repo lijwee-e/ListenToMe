@@ -9,3 +9,12 @@
    require install vlc player
    default pulseaudio is not installed:
    sudo apt-get --purge --reinstall install pulseaudio
+5. pygames
+6. Pillow
+   pip install pillow
+7. pyqrcode
+   pip install pyqrcode
+8. pypng
+   pip install pypng
+9. boto
+   pip install boto
